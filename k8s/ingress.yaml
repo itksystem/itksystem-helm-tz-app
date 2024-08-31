@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: health-check-ingress
+  namespace: default
+  annotations:
+#    nginx.ingress.kubernetes.io/use-regex: "true"  # Разрешаем использовать регулярные выражения в путях
+    nginx.ingress.kubernetes.io/rewrite-target: /users  # Переписываем путь для правильного направления трафика
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: arch.homework
+      http:
+        paths:
+          # Маршрутизация для "/health"
+          - path: /users
+            pathType: Prefix
+            backend:
+              service:
+                name: health-check-service
+                port:
+                  number: 80

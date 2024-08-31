@@ -1,0 +1,12 @@
+auth:
+  rootPassword: admin12345$
+  database: demo
+  username: demo
+  password: "123456"
+global:
+  storageClass: "standard"
+persistence:
+  enabled: true
+  size: 1Gi
+  accessModes:
+    - ReadWriteOnce

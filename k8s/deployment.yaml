@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: health-check-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: health-check-service
+  template:
+    metadata:
+      labels:
+        app: health-check-service
+    spec:
+      nodeSelector:
+        dedicated: worker
+      containers:
+      - name: health-check-service
+        image: itksystem/itksystem-helm-tz-app-image:latest
+        imagePullPolicy: Always  # Рекомендуется для использования latest
+        ports:
+        - containerPort: 3000
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "500m"
+          limits:
+            memory: "512Mi"
+            cpu: "1"

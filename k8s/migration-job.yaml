@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-migration-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: migrate
+        image: mysql:8
+        command: ["sh", "-c", "echo \"$INIT_SQL\" | mysql -h mysql -u root -p$DB_PASSWORD"]
+        env:
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: DB_USER
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: mysql-root-password
+        - name: INIT_SQL
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: INIT_SQL
+      restartPolicy: OnFailure
