@@ -2,6 +2,7 @@
   "dependencies": {
     "express": "^4.19.2",
     "helm": "^0.2.1",
-    "mysql2": "^3.11.0"
+    "mysql2": "^3.11.0",
+    "prom-client": "^15.1.3"
   }
 }

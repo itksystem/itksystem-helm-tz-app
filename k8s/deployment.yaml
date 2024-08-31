@@ -17,7 +17,7 @@ spec:
       containers:
       - name: health-check-service
         image: itksystem/itksystem-helm-tz-app-image:latest
-        imagePullPolicy: Always  # Рекомендуется для использования latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000
         resources:
@@ -27,3 +27,24 @@ spec:
           limits:
             memory: "512Mi"
             cpu: "1"
+        env:
+        - name: DB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: DB_HOST
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: DB_USER
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: DB_PASSWORD
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: DB_NAME
